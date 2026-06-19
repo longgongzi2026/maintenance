@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pool Connectivity & Nodes</title>
+    <style>
+        :root {
+            --bg-color: #f6f8fa;
+            --container-bg: #ffffff;
+            --text-main: #24292e;
+            --text-muted: #586069;
+            --border-color: #e1e4e8;
+            --primary-green: #28a745;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+            line-height: 1.6; 
+            color: var(--text-main); 
+            background-color: var(--bg-color); 
+            padding: 16px; 
+            margin: 0;
+        }
+        .container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            background: var(--container-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 20px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+        }
+        h3 { margin-top: 24px; font-size: 18px; border-bottom: 1px solid #eaecef; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        h3:first-of-type { margin-top: 0; }
+        p { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+        
+        /* 电脑端默认表格样式 */
+        .node-table { width: 100%; border-collapse: collapse; margin-top: 16px; display: table; }
+        .node-table th, .node-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .node-table th { background-color: var(--bg-color); font-weight: 600; }
+        
+        /* 手机端隐藏的卡片式布局（默认隐藏） */
+        .mobile-cards { display: none; }
+
+        code { font-family: "SFMono-Regular", Consolas, monospace; background-color: rgba(27,31,35,0.05); padding: 0.3em 0.5em; border-radius: 4px; font-size: 85%; word-break: break-all; }
+        .btn-copy { background-color: #fafbfc; border: 1px solid rgba(27,31,35,0.15); border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+        .btn-copy:hover { background-color: #f3f4f6; }
+        pre { background: #23272e; color: #abb2bf; padding: 16px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 13px; margin-top: 10px; }
+        
+        /* 🚨 核心技术防线：手机端垂直屏幕自适应媒体查询（断点 768px） */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 16px; }
+            
+            /* 手机端隐藏电脑表格 */
+            .node-table { display: none; }
+            
+            /* 手机端激活卡片布局 */
+            .mobile-cards { display: block; margin-top: 16px; }
+            .card { 
+                background: #f8f9fa; 
+                border: 1px solid var(--border-color); 
+                border-radius: 8px; 
+                padding: 14px; 
+                margin-bottom: 12px; 
+            }
+            .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+            .card-title { font-weight: bold; font-size: 14px; }
+            .card-status { font-size: 12px; font-weight: 500; }
+            .card-body { margin-bottom: 12px; }
+            .card-action { text-align: right; }
+            .card-action .btn-copy { width: 100%; padding: 8px 0; font-size: 13px; } /* 增大点击面积防止误触 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h3>🌐 Pool Connectivity & Nodes</h3>
+    <p>We update our pool nodes here periodically. If you encounter connection issues, please check this section for the latest active nodes to restore your connection.</p>
+
+    <!-- 1. 电脑端显示的表格 -->
+    <table class="node-table">
+        <thead>
+            <tr>
+                <th>Location / Type</th>
+                <th>Stratum / Node URL</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Primary Node</strong></td>
+                <td><code id="pc-p">stratum+tcp://jsijeg.com:3333</code></td>
+                <td>🟢 Active</td>
+                <td><button class="btn-copy" onclick="copyText('pc-p', this)">Copy</button></td>
+            </tr>
+            <tr>
+                <td><strong>Failover Node 1</strong></td>
+                <td><code id="pc-f1">stratum+tcp://jsiehgi.org:3333</code></td>
+                <td>🟢 Backup</td>
+                <td><button class="btn-copy" onclick="copyText('pc-f1', this)">Copy</button></td>
+            </tr>
+            <tr>
+                <td><strong>Failover Node 2</strong></td>
+                <td><code id="pc-f2">stratum+tcp://://jsijeg.com</code></td>
+                <td>🟢 Backup</td>
+                <td><button class="btn-copy" onclick="copyText('pc-f2', this)">Copy</button></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- 2. 手机垂直屏自动激活的卡片式布局 -->
+    <div class="mobile-cards">
+        <!-- 卡片 1 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Primary Node</span>
+                <span class="card-status">🟢 Active</span>
+            </div>
+            <div class="card-body">
+                <code id="mb-p">stratum+tcp://jsijeg.com:3333</code>
+            </div>
+            <div class="card-action">
+                <button class="btn-copy" onclick="copyText('mb-p', this)">Copy Node URL</button>
+            </div>
+        </div>
+        <!-- 卡片 2 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Failover Node 1</span>
+                <span class="card-status">🟢 Backup</span>
+            </div>
+            <div class="card-body">
+                <code id="mb-f1">stratum+tcp://jsiehgi.org:3333</code>
+            </div>
+            <div class="card-action">
+                <button class="btn-copy" onclick="copyText('mb-f1', this)">Copy Node URL</button>
+            </div>
+        </div>
+        <!-- 卡片 3 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="card-title">Failover Node 2</span>
+                <span class="card-status">🟢 Backup</span>
+            </div>
+            <div class="card-body">
+                <code id="mb-f2">stratum+tcp://://jsijeg.com</code>
+            </div>
+            <div class="card-action">
+                <button class="btn-copy" onclick="copyText('mb-f2', this)">Copy Node URL</button>
+            </div>
+        </div>
+    </div>
+
+    <h3>💻 Windows Quick Start (.bat)</h3>
+    <p>Create a new text file, rename it to <code>start_mining.bat</code>, and paste the code below. Replace <code>YOUR_WALLET</code> with your address.</p>
+    <pre id="bat-code">@echo off
+set WALLET=YOUR_WALLET_ADDRESS.worker1
+nbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp://jsiehgi.org:3333 -o2 stratum+tcp://://jsijeg.com
+pause</pre>
+</div>
+
+<script>
+    function copyText(id, btn) {
+        const text = document.getElementById(id).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const old = btn.innerText; 
+            btn.innerText = "Copied ✓";
+            btn.style.backgroundColor = "var(--primary-green)";
+            btn.style.color = "#ffffff";
+            btn.style.borderColor = "var(--primary-green)";
+            setTimeout(() => { 
+                btn.innerText = old; 
+                btn.style.backgroundColor = "#fafbfc";
+                btn.style.color = "var(--text-main)";
+                btn.style.borderColor = "rgba(27,31,35,0.15)";
+            }, 1200);
+        }).catch(err => {
+            console.error('Failed to copy: ', err);
+        });
+    }
+</script>
+</body>
+</html>
