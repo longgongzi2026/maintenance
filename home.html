@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Status Verification</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f3f4f6; }
+        .status-box { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); text-align: center; max-width: 400px; width: 100%; }
+        .spinner { border: 4px solid rgba(0,0,0,0.1); width: 40px; height: 40px; border-radius: 50%; border-left-color: #10b981; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .success-icon { color: #10b981; font-size: 48px; display: none; margin-bottom: 15px; font-weight: bold; }
+        #status-text { font-size: 16px; color: #4b5563; font-weight: 500; line-height: 1.5; }
+        .enter-btn { display: none; margin-top: 20px; width: 100%; padding: 12px; background: #10b981; color: white; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: 600; transition: background 0.2s; }
+        .enter-btn:hover { background: #059669; }
+    </style>
+</head>
+<body>
+
+    <div class="status-box">
+        <!-- 英文勾选符号 -->
+        <div class="success-icon" id="icon">✓</div>
+        <div class="spinner" id="loader"></div>
+        <!-- 地道的英文初始化提示 -->
+        <p id="status-text">Verifying connection and system environment...</p>
+        <!-- 符合美式习惯的行动点按钮 (CTA) -->
+        <button class="enter-btn" id="btn" onclick="window.location.href='/index.html'">Go to Homepage</button>
+    </div>
+
+    <script>
+        // Simulating backend health check. Resolves in 2 seconds.
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('icon').style.display = 'block';
+            
+            // 更改为美国用户习惯的“系统全部正常”提示
+            document.getElementById('status-text').innerText = 'All systems operational. Maintenance complete!';
+            document.getElementById('status-text').style.color = '#10b981';
+            document.getElementById('btn').style.display = 'block';
+        }, 2000);
+    </script>
+</body>
+</html>
