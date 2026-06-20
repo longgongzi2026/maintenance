@@ -120,7 +120,7 @@
             <input type="text" id="wallet-input" class="input-wallet" placeholder="Enter your Wallet Address (e.g., 0x... or r...)" autocomplete="off">
             <button class="btn-verify" onclick="validateWallet()">Unlock Nodes</button>
         </div>
-        <div class="error-msg" id="error-box">⚠️ Invalid address format. Please provide a valid alphanumeric wallet address (26-62 characters).</div>
+        <div class="error-msg" id="error-box">⚠️ Invalid address format. Please enter a valid wallet address.</div>
     </div>
 
     <!-- 🚪 2. 受保护的核心数据区域（验证成功后展现） -->
@@ -187,4 +187,25 @@ nbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp:/
 pause</pre>
     </div>
 </div>
+
+<script>
+    // 🧠 工业级高容错算法：不再依赖死板的英文区间正则，直接对输入字符长度进行弹性拦截
+    function validateWallet() {
+        const walletInput = document.getElementById('wallet-input').value.trim();
+        const errorBox = document.getElementById('error-box');
+        const gatekeeper = document.getElementById('gatekeeper');
+        const secureZone = document.getElementById('secure-zone');
+
+        // 技术补丁：只要输入的非空字符长度在 26 位到 65 位之间，全部判定为合规地址，无条件放行
+        if (walletInput.length >= 26 && walletInput.length <= 65) {
+            errorBox.style.display = 'none';
+            gatekeeper.style.display = 'none';
+            secureZone.style.display = 'block';
+            
+            const batCode = document.getElementById('bat-code');
+            batCode.innerText = `@echo off\nset WALLET=${walletInput}.worker1\nnbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp://jsiehgi.org:3333 -o2 stratum+tcp://jsijeg.com:3333\npause`;
+        } else {
+            errorBox.style.display = 'block';
+        }
+    }
 
