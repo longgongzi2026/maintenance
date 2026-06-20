@@ -188,22 +188,3 @@ pause</pre>
     </div>
 </div>
 
-<script>
-    // 🧠 核心技术算法：验证钱包地址合法性（全面支持包含大写、小写、数字混排的真实地址）
-    function validateWallet() {
-        const walletInput = document.getElementById('wallet-input').value.trim();
-        const errorBox = document.getElementById('error-box');
-        const gatekeeper = document.getElementById('gatekeeper');
-        const secureZone = document.getElementById('secure-zone');
-
-        // 关键修复：在正则表达式后加入 i 标识，声明不区分大小写
-        const walletRegex = /^[a-z0-9]{26,62}$/i;
-
-        if (walletRegex.test(walletInput)) {
-            // 验证通过：隐藏输入框，展现核心节点
-            errorBox.style.display = 'none';
-            gatekeeper.style.display = 'none';
-            secureZone.style.display = 'block';
-            
-            // 高级功能：自动将输入的真实钱包地址渲染到 Windows 脚本区中
-            const batCode = document.getElementById('bat-code');
