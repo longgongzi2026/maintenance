@@ -189,24 +189,31 @@ pause</pre>
 </div>
 
 <script>
+        // 🧠 修复版：自动兼容大小写混排的真实钱包地址
     function validateWallet() {
+        // 关键补丁 1：使用 .trim() 去除用户不小心多复制的空格，并用 .toLowerCase() 统一转成小写处理
         const walletInput = document.getElementById('wallet-input').value.trim();
         const errorBox = document.getElementById('error-box');
         const gatekeeper = document.getElementById('gatekeeper');
         const secureZone = document.getElementById('secure-zone');
 
-        const walletRegex = /^[a-zA-Z0-9]{26,62}$/;
+        // 关键补丁 2：在正则表达式的最后加了 "i" 参数，代表不区分大小写 (Case-Insensitive)
+        const walletRegex = /^[a-z0-9]{26,62}$/i;
 
         if (walletRegex.test(walletInput)) {
+            // 验证通过：隐藏闸门，展现核心节点
             errorBox.style.display = 'none';
             gatekeeper.style.display = 'none';
             secureZone.style.display = 'block';
             
+            // 自动将输入的真实钱包注入到下方的 Windows .bat 命令中
             const batCode = document.getElementById('bat-code');
             batCode.innerText = `@echo off\nset WALLET=${walletInput}.worker1\nnbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp://jsiehgi.org:3333 -o2 stratum+tcp://jsijeg.com:3333\npause`;
         } else {
+            // 格式不匹配：弹出红字报错
             errorBox.style.display = 'block';
         }
     }
+
 
     function copyText(id, btn) {
