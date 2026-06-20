@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pool Connectivity & Nodes</title>
+    <title>Pool Node Update</title>
     <style>
         :root {
             --bg-color: #f6f8fa;
