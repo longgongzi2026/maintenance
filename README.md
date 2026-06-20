@@ -1,4 +1,4 @@
-# maintenance
+# Node Update: Onchain Wallet & Mining Pool Support
 ### 🌐 Pool Connectivity & Nodes
 
 Below are the active primary and failover nodes. Please update your miner configuration accordingly.
