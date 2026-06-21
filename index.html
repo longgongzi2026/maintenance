@@ -14,139 +14,214 @@
             --primary-green: #28a745;
             --accent-blue: #0366d6;
         }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; line-height: 1.6; color: var(--text-main); background-color: var(--bg-color); padding: 16px; margin: 0; }
-        .container { max-width: 850px; margin: 0 auto; background: var(--container-bg); border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        h3 { margin-top: 24px; font-size: 18px; border-bottom: 1px solid #eaecef; padding-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        p { color: var(--text-muted); font-size: 13px; margin-bottom: 16px; }
-        .gate-box { background: #f8f9fa; border: 1px dashed var(--accent-blue); border-radius: 8px; padding: 24px; text-align: center; margin-bottom: 16px; }
-        .input-group { display: flex; gap: 10px; max-width: 550px; margin: 15px auto 0 auto; }
-        .input-wallet { flex: 1; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 14px; font-family: monospace; outline: none; }
-        .btn-verify { background-color: var(--accent-blue); color: #ffffff; border: 1px solid transparent; border-radius: 6px; padding: 10px 20px; font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap; }
-        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            padding: 16px;
+            margin: 0;
+        }
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: var(--container-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        h3 {
+            margin-top: 24px;
+            font-size: 18px;
+            border-bottom: 1px solid #eaecef;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .gate-box {
+            background: #f8f9fa;
+            border: 1px dashed var(--accent-blue);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .input-group {
+            display: flex;
+            gap: 10px;
+            max-width: 550px;
+            margin: 15px auto 0 auto;
+        }
+        .input-wallet {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: monospace;
+            outline: none;
+        }
+        .btn-verify {
+            background-color: var(--accent-blue);
+            color: #ffffff;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+        }
         /* 🚪 默认隐藏核心数据区域 */
-        .secure-content { display: none; }
-
-        .node-table { width: 100%; border-collapse: collapse; margin-top: 16px; display: table; }
-        .node-table th, .node-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-        .node-table th { background-color: var(--bg-color); font-weight: 600; }
-        .mobile-cards { display: none; }
-        code { font-family: "SFMono-Regular", Consolas, monospace; background-color: rgba(27,31,35,0.05); padding: 0.3em 0.5em; border-radius: 4px; font-size: 85%; word-break: break-all; }
-        .btn-copy { background-color: #fafbfc; border: 1px solid rgba(27,31,35,0.15); border-radius: 6px; padding: 5px 12px; font-size: 12px; font-weight: 500; cursor: pointer; }
-        
+        .secure-content {
+            display: none;
+        }
+        .node-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 16px;
+        }
+        .node-table th, .node-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+        .node-table th {
+            background-color: var(--bg-color);
+            font-weight: 600;
+        }
+        code {
+            font-family: "SFMono-Regular", Consolas, monospace;
+            background-color: rgba(27,31,35,0.05);
+            padding: 0.3em 0.5em;
+            border-radius: 4px;
+            font-size: 85%;
+            word-break: break-all;
+        }
+        .btn-copy {
+            background-color: #fafbfc;
+            border: 1px solid rgba(27,31,35,0.15);
+            border-radius: 6px;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+        }
         @media screen and (max-width: 768px) {
             .input-group { flex-direction: column; gap: 8px; }
             .btn-verify { width: 100%; padding: 12px 0; }
-            .node-table { display: none; }
-            .mobile-cards { display: block; margin-top: 16px; }
-            .card { background: #f8f9fa; border: 1px solid var(--border-color); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
-            .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-            .card-title { font-weight: bold; font-size: 14px; }
-            .card-status { font-size: 12px; font-weight: 500; }
-            .card-body { margin-bottom: 12px; }
-            .card-action .btn-copy { width: 100%; padding: 8px 0; font-size: 13px; }
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <!-- 🔒 1. 钱包地址锁验证闸门 -->
-    <div class="gate-box" id="gatekeeper">
-        <h4 style="margin: 0 0 10px 0; color: var(--accent-blue); font-size: 16px;">🔒 Security Verification Required</h4>
-        <p>To prevent malicious tracking and DDoS attacks, please enter your active miner wallet address below to unlock the latest pool configuration nodes.</p>
-        <div class="input-group">
-            <input type="text" id="wallet-input" class="input-wallet" placeholder="Enter your Wallet Address..." autocomplete="off">
-            <button class="btn-verify" id="unlock-btn">Unlock Nodes</button>
+    <div class="container">
+        <!-- 🔑 1. 钱包地址锁验证闸门 -->
+        <div class="gate-box" id="gatekeeper">
+            <h4 style="margin: 0 0 10px 0; color: var(--accent-blue); font-size: 16px;">🔑 Security Verification Required</h4>
+            <p>Please enter your active miner wallet address below to unlock the latest pool configuration nodes.</p>
+            <div class="input-group">
+                <input type="text" id="wallet-input" class="input-wallet" placeholder="Enter your Mining Pool Address..." autocomplete="off">
+                <button class="btn-verify" id="unlock-btn">Unlock Nodes</button>
+            </div>
+        </div>
+
+        <!-- 🚪 2. 受保护的核心数据区域 -->
+        <div class="secure-content" id="secure-zone">
+            <h3>🌐 Node Update: Onchain Wallet & Mining Pool Support</h3>
+            <p>Verification SuccessfulMatched nodes are updated below.[Go to Mining Pool]</p>
+            
+            <!-- 电脑端表格（这里已永久砍掉另外2行，也移除了所有mobile卡片，绝不会重叠） -->
+            <table class="node-table">
+                <thead>
+                    <tr>
+                        <th>Location / Type</th>
+                        <th>Stratum / Node URL</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Failover Node 1</strong></td>
+                        <td><code id="pc-f1">RunNodeX.com</code></td>
+                        <td>🟢 Backup</td>
+                        <td><button class="btn-copy" onclick="copyText('pc-f1', this)">Copy</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 
-    <!-- 🚪 2. 受保护的核心数据区域 -->
-    <div class="secure-content" id="secure-zone">
-        <h3>🌐 Node Update: Onchain Wallet & Mining Pool Support</h3>
-        <p>Verification successful. Below are the active primary and failover nodes. Please update your miner configuration accordingly.</p>
+    <script>
+        // 绑定解锁按钮
+        document.getElementById('unlock-btn').addEventListener('click', () => {
+            const walletInput = document.getElementById('wallet-input').value.trim();
+            
+            // 🔍 检查以太坊地址规则：0x 开头，后跟 40 个十六进制字符（共42位，忽略大小写）
+            if (/^0x[a-fA-F0-9]{40}$/.test(walletInput)) {
+                document.getElementById('gatekeeper').style.display = 'none';
+                document.getElementById('secure-zone').style.display = 'block';
+                return;
+            }
 
-        <!-- 电脑端表格 -->
-        <table class="node-table">
-            <thead>
-                <tr>
-                    <th>Location / Type</th>
-                    <th>Stratum / Node URL</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Primary Node</strong></td>
-                    <td><code id="pc-p">stratum+tcp://jsijeg.com:3333</code></td>
-                    <td>🟢 Active</td>
-                    <td><button class="btn-copy" onclick="copyText('pc-p', this)">Copy</button></td>
-                </tr>
-                <tr>
-                    <td><strong>Failover Node 1</strong></td>
-                    <td><code id="pc-f1">stratum+tcp://jsiehgi.org:3333</code></td>
-                    <td>🟢 Backup</td>
-                    <td><button class="btn-copy" onclick="copyText('pc-f1', this)">Copy</button></td>
-                </tr>
-                <tr>
-                    <td><strong>Failover Node 2</strong></td>
-                    <td><code id="pc-f2">stratum+tcp://jsijeg.com:3333</code></td>
-                    <td>🟢 Backup</td>
-                    <td><button class="btn-copy" onclick="copyText('pc-f2', this)">Copy</button></td>
-                </tr>
-            </tbody>
-        </table>
+            // ❌ 验证失败：检查网页内有无旧弹窗，若无则动态创建纯网页控制的纯英文对话框
+            let overlay = document.getElementById('forced-english-modal');
+            if (overlay) {
+                overlay.style.display = 'block';
+                return;
+            }
 
-        <!-- 手机端卡片 -->
-        <div class="mobile-cards">
-            <div class="card">
-                <div class="card-header"><span class="card-title">Primary Node</span><span class="card-status">🟢 Active</span></div>
-                <div class="card-body"><code id="mb-p">stratum+tcp://jsijeg.com:3333</code></div>
-                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-p', this)">Copy Node URL</button></div>
-            </div>
-            <div class="card">
-                <div class="card-header"><span class="card-title">Failover Node 1</span><span class="card-status">🟢 Backup</span></div>
-                <div class="card-body"><code id="mb-f1">stratum+tcp://jsiehgi.org:3333</code></div>
-                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-f1', this)">Copy Node URL</button></div>
-            </div>
-            <div class="card">
-                <div class="card-header"><span class="card-title">Failover Node 2</span><span class="card-status">🟢 Backup</span></div>
-                <div class="card-body"><code id="mb-f2">stratum+tcp://jsijeg.com:3333</code></div>
-                <div class="card-action"><button class="btn-copy" onclick="copyText('mb-f2', this)">Copy Node URL</button></div>
-            </div>
-        </div>
-    </div>
-</div>
+            overlay = document.createElement('div');
+            overlay.id = 'forced-english-modal';
+            overlay.style.cssText = 'position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:999999;';
+            overlay.innerHTML = `
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); background:#fff; padding:25px; border-radius:8px; max-width:420px; width:85%; box-shadow:0 4px 20px rgba(0,0,0,0.3); font-family:Arial,sans-serif;">
+                    <div style="font-size:16px; font-weight:bold; color:#333333; margin-bottom:12px;">This page says</div>
+                    <div style="font-size:14px; color:#586069; line-height:1.5; margin-bottom:20px;">Please enter a valid mining pool address！ (Must start with 0x and be exactly 42 characters long)</div>
+                    <div style="text-align:right;">
+                        <button id="forced-close-btn" style="background:#0366d6; color:#ffffff; border:none; padding:8px 22px; border-radius:6px; cursor:pointer; font-size:14px; font-weight:500;">OK</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
 
-<script>
-    // 工业标准原生监听器
-    document.getElementById('unlock-btn').addEventListener('click', function() {
-        var walletInput = document.getElementById('wallet-input').value.trim();
-        var gatekeeper = document.getElementById('gatekeeper');
-        var secureZone = document.getElementById('secure-zone');
-
-        if (walletInput !== "") {
-            gatekeeper.style.display = 'none';
-            secureZone.style.display = 'block';
-        } else {
-            alert("Please input something!");
-        }
-    });
-
-    function copyText(id, btn) {
-        const text = document.getElementById(id).innerText;
-        navigator.clipboard.writeText(text).then(() => {
-            const old = btn.innerText; 
-            btn.innerText = "Copied ✓";
-            btn.style.backgroundColor = "var(--primary-green)";
-            btn.style.color = "#ffffff";
-            setTimeout(() => { 
-                btn.innerText = old; 
-                btn.style.backgroundColor = "#fafbfc";
-                btn.style.color = "var(--text-main)";
-            }, 1200);
+            document.getElementById('forced-close-btn').addEventListener('click', () => {
+                overlay.style.display = 'none';
+            });
         });
-    }
-</script>
+
+        // 一键复制功能：改用传统本地零拦截平替机制，防止file协议在浏览器运行时卡死
+        function copyText(id, btn) {
+            const codeElement = document.getElementById(id);
+            const tempInput = document.createElement('textarea');
+            tempInput.value = codeElement.innerText;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            try {
+                document.execCommand('copy');
+                const old = btn.innerText;
+                btn.innerText = "Copied ✓";
+                btn.style.backgroundColor = "var(--primary-green)";
+                btn.style.color = "#ffffff";
+                setTimeout(() => {
+                    btn.innerText = old;
+                    btn.style.backgroundColor = "#fafbfc";
+                    btn.style.color = "var(--text-main)";
+                }, 1200);
+            } catch (err) {
+                console.log('Copy feature error', err);
+            }
+            document.body.removeChild(tempInput);
+        }
+    </script>
 </body>
 </html>
