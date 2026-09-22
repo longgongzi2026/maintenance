@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- 移动端标准的视口配置，确保1:1等比例呈现 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- 针对移动端浏览器的优化标签 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>System Under Maintenance</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* 移除移动端点击时的蓝色高亮外框 */
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Roboto, Arial, sans-serif;
+            background-color: #0f111a; /* 暗黑背景 */
+            color: #e2e8f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* 使用 dvh (Dynamic Viewport Height) 完美适配手机浏览器工具栏的变化 */
+            min-height: 100dvh; 
+            padding: 24px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 400px; /* 限制最大宽度，完美适配各类手机屏幕 */
+            background: #1a1d2e;
+            padding: 35px 24px;
+            border-radius: 20px; /* 更圆润的移动端卡片风格 */
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+            border: 1px solid #2d3250;
+        }
+
+        /* Logo Area */
+        .logo-area {
+            margin-bottom: 25px;
+        }
+
+        .logo-placeholder {
+            max-height: 50px; /* 缩减手机端的 Logo 高度 */
+            max-width: 80%;
+            object-fit: contain;
+        }
+
+        /* Fallback Gear Animation */
+        .icon-gear {
+            font-size: 48px;
+            color: #00adb5;
+            animation: gear-spin 4s linear infinite;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        @keyframes gear-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        h1 {
+            font-size: 22px; /* 适配手机的标题字号 */
+            margin-bottom: 12px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        p {
+            font-size: 14px; /* 适配手机的舒适阅读字号 */
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 28px;
+            padding: 0 4px;
+        }
+
+        /* Countdown Box */
+        .countdown-box {
+            background-color: #111322;
+            border: 1px solid #252945;
+            border-radius: 12px;
+            padding: 16px 12px;
+            margin-bottom: 30px;
+        }
+
+        .countdown-title {
+            font-size: 11px;
+            color: #64748b;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .timer {
+            font-size: 24px;
+            font-weight: 700;
+            color: #ff4a5a;
+            font-family: 'Courier New', Courier, monospace;
+            letter-spacing: 0.5px;
+        }
+
+        /* Mobile-Optimized Big Button */
+        .btn-container {
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px 20px; /* 增大触控面积，方便单手点按 */
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #00adb5 0%, #007bb5 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(0, 173, 181, 0.25);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        /* 移动端手指按住时的微小缩放反馈 */
+        .btn:active {
+            transform: scale(0.97);
+            background: linear-gradient(135deg, #00969e 0%, #006c9e 100%);
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #475569;
+            border-top: 1px solid #252945;
+            padding-top: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Corporate Logo -->
+    <div class="logo-area">
+        <!-- 替换 src 地址为您适合暗黑背景的透明 Logo 链接 -->
+        <img class="logo-placeholder" src="https://placeholder.com" alt="Logo" onerror="this.style.display='none'; document.getElementById('fallback-gear').classList.remove('hidden');">
+        <!-- Fallback to spinning gear if image fails to load -->
+        <div id="fallback-gear" class="icon-gear hidden">⚙️</div>
+    </div>
+    
+    <!-- Main Content -->
+    <h1>System Under Maintenance</h1>
+    <p>To provide a better and more secure experience, our system is undergoing scheduled upgrades. The site is temporarily unavailable. We apologize for any inconvenience.</p>
+    
+    <!-- Countdown Box -->
+    <div class="countdown-box">
+        <div class="countdown-title">Estimated Time Remaining</div>
+        <div class="timer" id="countdown-timer">00:00:00</div>
+    </div>
+    
+    <!-- Single Merged Support Button -->
+    <div class="btn-container">
+        <!-- 请将 href 替换为真实的移动端在线客服、工单链接或客服邮箱 -->
+        <a href="https://direct.lc.chat/19941971/" class="btn">
+            💬 Contact Customer Support
+        </a>
+    </div>
+    
+    <div class="footer">
+        Thank you for your patience and cooperation.
+    </div>
+</div>
+
+<script>
+    // 最后的 +08:00 代表北京时间（东八区）
+        const maintenanceEndTime = new Date("2026-09-23T14:00:00+08:00").getTime();
+
+
+    // 2. 倒计时核心逻辑
+    function updateCountdown() {
+        const now = new Date().getTime();
+        const difference = maintenanceEndTime - now;
+        const timerElement = document.getElementById('countdown-timer');
+
+        if (difference <= 0) {
+            timerElement.innerHTML = "Maintenance completed. Please refresh.";
+            timerElement.style.color = "#00adb5";
+            clearInterval(timerInterval);
+            return;
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        // 保持两位数显示
+        const displayHours = String(hours + (days * 24)).padStart(2, '0');
+        const displayMinutes = String(minutes).padStart(2, '0');
+        const displaySeconds = String(seconds).padStart(2, '0');
+
+        timerElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+    }
+
+    // 3. 初始化定时器
+    updateCountdown();
+    const timerInterval = setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
